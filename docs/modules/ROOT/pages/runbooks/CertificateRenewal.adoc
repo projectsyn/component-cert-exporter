@@ -1,0 +1,10 @@
+= Alert rule: CertificateRenewal
+
+include::partial$runbooks/contribution_note.adoc[]
+
+== icon:glasses[] Overview
+
+This alert fires when a certificate is about to expire in 28 days.
+
+
+== icon:bug[] Steps for debugging

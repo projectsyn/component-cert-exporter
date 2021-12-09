@@ -1,0 +1,43 @@
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: false
+allowPrivilegedContainer: false
+allowedCapabilities: null
+allowedUnsafeSysctls: null
+apiVersion: security.openshift.io/v1
+defaultAddCapabilities: null
+fsGroup:
+  ranges:
+    - max: 65535
+      min: 1
+  type: MustRunAs
+kind: SecurityContextConstraints
+metadata:
+  labels:
+    app.kubernetes.io/component: cert-exporter
+    app.kubernetes.io/managed-by: syn
+    app.kubernetes.io/name: cert-exporter
+  name: cert-exporter-scc
+  namespace: syn-cert-exporter
+priority: null
+readOnlyRootFilesystem: true
+requiredDropCapabilities:
+  - ALL
+runAsUser:
+  type: MustRunAsNonRoot
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+  - '*'
+supplementalGroups:
+  ranges:
+    - max: 65535
+      min: 1
+  type: MustRunAs
+users:
+  - system:serviceaccount:syn-cert-exporter:cert-exporter-x509-certificate-exporter
+volumes:
+  - secret

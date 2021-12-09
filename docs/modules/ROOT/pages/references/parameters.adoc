@@ -2,18 +2,75 @@
 
 The parent key for all of the following parameters is `cert_exporter`.
 
-== `namespace`
+== `ignore_alerts`
 
 [horizontal]
-type:: string
-default:: `syn-cert-exporter`
+type:: list
+default::
++
+[source,yaml]
+----
+----
 
-The namespace in which to deploy this component.
+This parameter can be used to disable alerts provided by cert-exporter.
+The component supports removing entries in this parameter by providing the entry prefixed with `~`.
+
+== `include_namespaces`
+
+[horizontal]
+type:: list
+default::
++
+[source,yaml]
+----
+----
+
+Restrict the list of namespaces the TLS Secrets exporter should scan for certificates to watch (all namespaces if empty).
+
+== `exclude_namespaces`
+
+[horizontal]
+type:: list
+default::
++
+[source,yaml]
+----
+- openshift-operator-lifecycle-manager
+----
+
+Exclude namespaces from being scanned by the TLS Secrets exporter (evaluated after `include_namespaces`).
+
+== `include_labels`
+
+[horizontal]
+type:: list
+default::
++
+[source,yaml]
+----
+----
+
+Only watch TLS Secrets having these labels (all secrets if empty). Items can be keys such as `my-label` or also require a value with syntax `my-label=my-value`.
+
+== `exclude_labels`
+
+[horizontal]
+type:: list
+default::
++
+[source,yaml]
+----
+----
+
+Exclude TLS Secrets having these labels. Items can be keys such as `my-label` or also require a value with syntax `my-label=my-value`.
 
 
 == Example
 
 [source,yaml]
 ----
-namespace: example-namespace
+ignore_alerts:
+  - X509ExporterReadErrors
+include_namespaces:
+  - openshift-ingress
 ----

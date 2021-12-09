@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: cert-exporter
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: x509-certificate-exporter
+    app.kubernetes.io/version: 2.12.0
+    helm.sh/chart: x509-certificate-exporter-1.20.0
+  name: cert-exporter-x509-certificate-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cert-exporter
+      app.kubernetes.io/name: x509-certificate-exporter
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: '9793'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kubernetes.io/instance: cert-exporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: x509-certificate-exporter
+        app.kubernetes.io/version: 2.12.0
+        helm.sh/chart: x509-certificate-exporter-1.20.0
+    spec:
+      containers:
+        - args:
+            - --watch-kube-secrets
+            - --secret-type=kubernetes.io/tls:tls.crt
+            - --exclude-namespace=openshift-operator-lifecycle-manager
+            - --max-cache-duration=300s
+            - --listen-address=:9793
+          image: docker.io/enix/x509-certificate-exporter:2.12.1
+          imagePullPolicy: IfNotPresent
+          name: x509-certificate-exporter
+          ports:
+            - containerPort: 9793
+              name: metrics
+          resources:
+            limits:
+              cpu: 200m
+              memory: 100Mi
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 65534
+            runAsUser: 65534
+      restartPolicy: Always
+      serviceAccountName: cert-exporter-x509-certificate-exporter

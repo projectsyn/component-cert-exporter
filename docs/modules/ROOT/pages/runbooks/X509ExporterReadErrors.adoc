@@ -1,0 +1,11 @@
+= Alert rule: X509ExporterReadErrors
+
+include::partial$runbooks/contribution_note.adoc[]
+
+== icon:glasses[] Overview
+
+This alert fires when tje x509-certificate-exporter instance has experienced errors reading certificate files or querying the Kubernetes API.
+This could be caused by a misconfiguration.
+
+
+== icon:bug[] Steps for debugging

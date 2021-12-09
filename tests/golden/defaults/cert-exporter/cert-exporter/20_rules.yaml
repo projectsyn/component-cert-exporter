@@ -1,0 +1,69 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations: {}
+  labels:
+    name: syn-cert-exporter-rules
+  name: syn-cert-exporter-rules
+  namespace: syn-cert-exporter
+spec:
+  groups:
+    - name: cert-exporter-alert.rules
+      rules:
+        - alert: SYN_X509ExporterReadErrors
+          annotations:
+            description: Over the last 15 minutes, this x509-certificate-exporter
+              instance has experienced errors reading certificate files or querying
+              the Kubernetes API. This could be caused by a misconfiguration if triggered
+              when the exporter starts.
+            message: Increasing read errors for x509-certificate-exporter
+            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/X509ExporterReadErrors.html
+            severity_level: warning
+          expr: delta(x509_read_errors[15m]) > 0
+          for: 5m
+          labels:
+            severity: warning
+            syn: 'true'
+            syn_component: cert-exporter
+        - alert: SYN_CertificateError
+          annotations:
+            description: Certificate could not be decoded {{$labels.secret_name}}
+              in Kubernetes secret {{ $labels.secret_namespace }}/{{ $labels.secret_name
+              }} at location {{ $labels.filepath }}.
+            message: Certificate cannot be decoded
+            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateError.html
+            severity_level: critical
+          expr: x509_cert_error > 0
+          for: 5m
+          labels:
+            severity: critical
+            syn: 'true'
+            syn_component: cert-exporter
+        - alert: SYN_CertificateRenewal
+          annotations:
+            description: Certificate for {{ $labels.subject_CN }} should be renewed
+              in Kubernetes secret {{ $labels.secret_namespace }} / {{ $labels.secret_name
+              }}.
+            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateRenewal.html
+            severity_level: warning
+            summary: Certificate should be renewed
+          expr: ((x509_cert_not_after - time()) / 86400) < 28
+          for: 15m
+          labels:
+            severity: warning
+            syn: 'true'
+            syn_component: cert-exporter
+        - alert: SYN_CertificateExpiration
+          annotations:
+            description: Certificate for {{ $labels.subject_CN }} is about to expire
+              in Kubernetes secret {{ $labels.secret_namespace }} / {{ $labels.secret_name
+              }}.
+            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateExpiration.html
+            severity_level: critical
+            summary: Certificate is about to expire
+          expr: ((x509_cert_not_after - time()) / 86400) < 14
+          for: 15m
+          labels:
+            severity: critical
+            syn: 'true'
+            syn_component: cert-exporter

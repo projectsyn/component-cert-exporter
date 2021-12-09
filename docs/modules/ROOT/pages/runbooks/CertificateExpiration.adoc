@@ -1,0 +1,11 @@
+= Alert rule: CertificateExpiration
+
+include::partial$runbooks/contribution_note.adoc[]
+
+== icon:glasses[] Overview
+
+This alert fires when a certificate is about to expire in 14 days.
+Immediate action is necessary.
+
+
+== icon:bug[] Steps for debugging

@@ -1,3 +1,10 @@
-# Overwrite parameters here
+parameters:
+  cert-exporter: {}
 
-# parameters: {...}
+  openshift4_monitoring:
+    alerts:
+      ignoreNames: []
+      customAnnotations: {}
+
+  facts:
+    distribution: openshift4
