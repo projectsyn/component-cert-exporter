@@ -1,0 +1,11 @@
+parameters:
+  kapitan:
+    compile:
+      - input_paths:
+          - cert-exporter/component/app.jsonnet
+        input_type: jsonnet
+        output_path: apps/
+      - input_paths:
+          - cert-exporter/component/main.jsonnet
+        input_type: jsonnet
+        output_path: cert-exporter/

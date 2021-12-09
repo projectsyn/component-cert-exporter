@@ -1,0 +1,4 @@
+parameters:
+  cert_exporter:
+    =_metadata: {}
+    namespace: syn-cert-exporter
