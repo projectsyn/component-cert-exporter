@@ -10,7 +10,6 @@ default::
 +
 [source,yaml]
 ----
-----
 
 This parameter can be used to disable alerts provided by cert-exporter.
 The component supports removing entries in this parameter by providing the entry prefixed with `~`.
@@ -22,7 +21,6 @@ type:: list
 default::
 +
 [source,yaml]
-----
 ----
 
 Restrict the list of namespaces the TLS Secrets exporter should scan for certificates to watch (all namespaces if empty).
@@ -50,7 +48,8 @@ default::
 ----
 ----
 
-Only watch TLS Secrets having these labels (all secrets if empty). Items can be keys such as `my-label` or also require a value with syntax `my-label=my-value`.
+Only watch TLS Secrets having those labels (all secrets if empty).
+Items can be keys such as `my-label` or also require a value with the syntax `my-label=my-value`.
 
 == `exclude_labels`
 
@@ -62,7 +61,8 @@ default::
 ----
 ----
 
-Exclude TLS Secrets having these labels. Items can be keys such as `my-label` or also require a value with syntax `my-label=my-value`.
+Exclude TLS Secrets having those labels.
+Items can be keys such as `my-label` or also require a value with the syntax `my-label=my-value`.
 
 
 == Example
