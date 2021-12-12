@@ -8,3 +8,5 @@ This alert fires when a certificate is about to expire in 28 days.
 
 
 == icon:bug[] Steps for debugging
+
+include::partial$runbooks/check_reason.adoc[]

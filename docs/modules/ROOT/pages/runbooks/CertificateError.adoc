@@ -8,3 +8,7 @@ This alert fires when certificate couldn't have been decoded.
 
 
 == icon:bug[] Steps for debugging
+
+=== Check certificate data
+
+Check the certificate data stored in the secret.

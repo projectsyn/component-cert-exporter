@@ -1,3 +1,6 @@
+applications:
+  - openshift4-monitoring
+
 parameters:
   cert-exporter: {}
 

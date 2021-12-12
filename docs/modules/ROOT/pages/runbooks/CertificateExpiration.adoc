@@ -9,3 +9,5 @@ Immediate action is necessary.
 
 
 == icon:bug[] Steps for debugging
+
+include::partial$runbooks/check_reason.adoc[]

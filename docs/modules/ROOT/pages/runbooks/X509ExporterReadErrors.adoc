@@ -9,3 +9,7 @@ This could be caused by a misconfiguration.
 
 
 == icon:bug[] Steps for debugging
+
+=== Check logs and certificate data
+
+Check the logs of the certificate exporter for more detail and check the secrets mentioned in the alert.

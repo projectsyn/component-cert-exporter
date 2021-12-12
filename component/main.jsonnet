@@ -5,17 +5,15 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.cert_exporter;
 
+local isOpenshift = std.startsWith(inv.parameters.facts.distribution, 'openshift');
+
 local namespace = kube.Namespace(params.namespace) {
   metadata+: {
-    annotations+: {
-      'openshift.io/node-selector': '',
-    },
     labels+: {
       'app.kubernetes.io/name': params.namespace,
-      'topolvm.cybozu.com/webhook': 'ignore',
       // Configure the namespaces so that the OCP4 cluster-monitoring
       // Prometheus can find the servicemonitors and rules.
-      'openshift.io/cluster-monitoring': 'true',
+      [if isOpenshift then 'openshift.io/cluster-monitoring']: 'true',
     },
   },
 };
