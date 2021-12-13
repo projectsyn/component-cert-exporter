@@ -1,0 +1,6 @@
+=== Check reason for expiration
+
+Check why the certificate is about to expire.
+
+* If the certificate manually issued plan the replacement of the certificate.
+* Check why cert-manager can't renew the certificate.

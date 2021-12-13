@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/instance: cert-exporter
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: x509-certificate-exporter
+    app.kubernetes.io/version: 2.12.0
+    helm.sh/chart: x509-certificate-exporter-1.20.0
+  name: cert-exporter-x509-certificate-exporter
+spec:
+  endpoints:
+    - interval: 60s
+      port: metrics
+      scrapeTimeout: 10s
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cert-exporter
+      app.kubernetes.io/name: x509-certificate-exporter

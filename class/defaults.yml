@@ -2,3 +2,32 @@ parameters:
   cert_exporter:
     =_metadata: {}
     namespace: syn-cert-exporter
+
+    chart: 1.20.0
+
+    image:
+      registry: docker.io
+      repository: enix/x509-certificate-exporter
+      tag: 2.12.1
+      pullPolicy: IfNotPresent
+
+    ignore_alerts: []
+
+    include_namespaces: []
+    exclude_namespaces:
+      - openshift-operator-lifecycle-manager
+    include_labels: []
+    exclude_labels: []
+
+    helm_values:
+      image: ${cert_exporter:image}
+      podAnnotations:
+        prometheus.io/port: "9793"
+        prometheus.io/scrape: "true"
+      secretsExporter:
+        includeNamespaces: ${cert_exporter:include_namespaces}
+        excludeNamespaces: ${cert_exporter:exclude_namespaces}
+        includeLabels: ${cert_exporter:include_labels}
+        excludeLabels: ${cert_exporter:exclude_labels}
+      prometheusRules:
+        create: false
