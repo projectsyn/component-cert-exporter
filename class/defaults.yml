@@ -13,11 +13,17 @@ parameters:
 
     ignore_alerts: []
 
+    # secrets exporter configs
     include_namespaces: []
-    exclude_namespaces:
-      - openshift-operator-lifecycle-manager
+    exclude_namespaces: []
     include_labels: []
     exclude_labels: []
+
+    # host-path exporter configs
+    watch_dirs: []
+    watch_files: []
+    watch_kubeconf: []
+    daemonsets: {}
 
     helm_values:
       image: ${cert_exporter:image}
@@ -29,5 +35,10 @@ parameters:
         excludeNamespaces: ${cert_exporter:exclude_namespaces}
         includeLabels: ${cert_exporter:include_labels}
         excludeLabels: ${cert_exporter:exclude_labels}
+      hostPathsExporter:
+        watchDirectories: ${cert_exporter:watch_dirs}
+        watchFiles: ${cert_exporter:watch_files}
+        watchKubeconfFiles: ${cert_exporter:watch_kubeconf}
+        daemonSets: ${cert_exporter:daemonsets}
       prometheusRules:
         create: false
