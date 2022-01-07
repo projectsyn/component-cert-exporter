@@ -2,7 +2,20 @@ applications:
   - openshift4-monitoring
 
 parameters:
-  cert-exporter: {}
+  cert_exporter:
+    watch_dirs:
+      - /etc/kubernetes/ssl
+    daemonsets:
+      master:
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
+      worker:
+        nodeSelector:
+          node-role.kubernetes.io/worker: ""
 
   openshift4_monitoring:
     alerts:

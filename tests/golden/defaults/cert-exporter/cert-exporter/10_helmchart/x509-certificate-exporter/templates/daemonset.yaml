@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app.kubernetes.io/instance: cert-exporter
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: x509-certificate-exporter
+    app.kubernetes.io/version: 2.12.0
+    helm.sh/chart: x509-certificate-exporter-1.20.0
+  name: cert-exporter-x509-certificate-exporter-master
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cert-exporter
+      app.kubernetes.io/name: x509-certificate-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: cert-exporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: x509-certificate-exporter
+        app.kubernetes.io/version: 2.12.0
+        helm.sh/chart: x509-certificate-exporter-1.20.0
+    spec:
+      containers:
+        - args:
+            - --listen-address=:9793
+            - --trim-path-components=3
+            - --watch-dir=/mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
+            - --max-cache-duration=300s
+          image: quay.io/enix/x509-certificate-exporter:2.12.1
+          imagePullPolicy: IfNotPresent
+          name: x509-certificate-exporter
+          ports:
+            - containerPort: 9793
+              name: metrics
+          resources:
+            limits:
+              cpu: 100m
+              memory: 40Mi
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 0
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
+              name: dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6
+              readOnly: true
+      hostNetwork: false
+      nodeSelector:
+        node-role.kubernetes.io/master: ''
+      restartPolicy: Always
+      serviceAccountName: cert-exporter-x509-certificate-exporter-node
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+      volumes:
+        - hostPath:
+            path: /etc/kubernetes/ssl
+            type: Directory
+          name: dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app.kubernetes.io/instance: cert-exporter
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: x509-certificate-exporter
+    app.kubernetes.io/version: 2.12.0
+    helm.sh/chart: x509-certificate-exporter-1.20.0
+  name: cert-exporter-x509-certificate-exporter-worker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cert-exporter
+      app.kubernetes.io/name: x509-certificate-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: cert-exporter
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: x509-certificate-exporter
+        app.kubernetes.io/version: 2.12.0
+        helm.sh/chart: x509-certificate-exporter-1.20.0
+    spec:
+      containers:
+        - args:
+            - --listen-address=:9793
+            - --trim-path-components=3
+            - --watch-dir=/mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
+            - --max-cache-duration=300s
+          image: quay.io/enix/x509-certificate-exporter:2.12.1
+          imagePullPolicy: IfNotPresent
+          name: x509-certificate-exporter
+          ports:
+            - containerPort: 9793
+              name: metrics
+          resources:
+            limits:
+              cpu: 100m
+              memory: 40Mi
+            requests:
+              cpu: 10m
+              memory: 20Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 0
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
+              name: dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6
+              readOnly: true
+      hostNetwork: false
+      nodeSelector:
+        node-role.kubernetes.io/worker: ''
+      restartPolicy: Always
+      serviceAccountName: cert-exporter-x509-certificate-exporter-node
+      volumes:
+        - hostPath:
+            path: /etc/kubernetes/ssl
+            type: Directory
+          name: dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6

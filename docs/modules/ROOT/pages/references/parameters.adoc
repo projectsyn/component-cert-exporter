@@ -6,10 +6,7 @@ The parent key for all of the following parameters is `cert_exporter`.
 
 [horizontal]
 type:: list
-default::
-+
-[source,yaml]
-----
+default:: []
 
 This parameter can be used to disable alerts provided by cert-exporter.
 The component supports removing entries in this parameter by providing the entry prefixed with `~`.
@@ -18,10 +15,7 @@ The component supports removing entries in this parameter by providing the entry
 
 [horizontal]
 type:: list
-default::
-+
-[source,yaml]
-----
+default:: []
 
 Restrict the list of namespaces the TLS Secrets exporter should scan for certificates to watch (all namespaces if empty).
 
@@ -29,12 +23,7 @@ Restrict the list of namespaces the TLS Secrets exporter should scan for certifi
 
 [horizontal]
 type:: list
-default::
-+
-[source,yaml]
-----
-- openshift-operator-lifecycle-manager
-----
+default:: []
 
 Exclude namespaces from being scanned by the TLS Secrets exporter (evaluated after `include_namespaces`).
 
@@ -42,11 +31,7 @@ Exclude namespaces from being scanned by the TLS Secrets exporter (evaluated aft
 
 [horizontal]
 type:: list
-default::
-+
-[source,yaml]
-----
-----
+default:: []
 
 Only watch TLS Secrets having those labels (all secrets if empty).
 Items can be keys such as `my-label` or also require a value with the syntax `my-label=my-value`.
@@ -55,15 +40,43 @@ Items can be keys such as `my-label` or also require a value with the syntax `my
 
 [horizontal]
 type:: list
-default::
-+
-[source,yaml]
-----
-----
+default:: []
 
 Exclude TLS Secrets having those labels.
 Items can be keys such as `my-label` or also require a value with the syntax `my-label=my-value`.
 
+== `watch_dirs`
+
+[horizontal]
+type:: list
+default:: []
+
+List of directory paths of the host to scan for PEM encoded certificate files to be watched and exported as metrics (one level deep).
+
+== `watch_files`
+
+[horizontal]
+type:: list
+default:: []
+
+List of file paths of the host for PEM encoded certificates to be watched and exported as metrics.
+
+== `watch_kubeconf`
+
+[horizontal]
+type:: list
+default:: []
+
+List of Kubeconf file paths of the host to scan for embedded certificates to export metrics about.
+
+== `daemonsets`
+
+[horizontal]
+type:: map
+default:: {}
+
+Configure the host-path exporter to watch certificates stored on the node itself.
+See the example below on how to enable a daemon set and read the https://github.com/enix/helm-charts/tree/master/charts/x509-certificate-exporter#-using-the-chart[documentation of the helm chart].
 
 == Example
 
@@ -73,4 +86,17 @@ ignore_alerts:
   - X509ExporterReadErrors
 include_namespaces:
   - openshift-ingress
+watch_dirs:
+  - /etc/kubernetes/ssl
+daemonsets:
+  master:
+    nodeSelector:
+      node-role.kubernetes.io/master: ""
+    tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+  worker:
+    nodeSelector:
+      node-role.kubernetes.io/worker: ""
 ----

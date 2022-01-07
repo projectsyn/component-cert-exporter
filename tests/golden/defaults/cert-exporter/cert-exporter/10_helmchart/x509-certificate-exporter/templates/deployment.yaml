@@ -30,7 +30,6 @@ spec:
         - args:
             - --watch-kube-secrets
             - --secret-type=kubernetes.io/tls:tls.crt
-            - --exclude-namespace=openshift-operator-lifecycle-manager
             - --max-cache-duration=300s
             - --listen-address=:9793
           image: quay.io/enix/x509-certificate-exporter:2.12.1
