@@ -27,7 +27,6 @@ parameters:
       # rule for which the patch is intended.
       patchRules: {}
 
-
     # secrets exporter configs
     include_namespaces: []
     exclude_namespaces: []

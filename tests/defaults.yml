@@ -3,6 +3,8 @@ applications:
 
 parameters:
   cert_exporter:
+    ignore_alerts:
+      - SYN_CertificateError
     alerts:
       ignoreNames:
         - SYN_CertificateRenewal

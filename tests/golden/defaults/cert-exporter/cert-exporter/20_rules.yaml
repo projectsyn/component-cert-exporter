@@ -30,25 +30,6 @@ spec:
             severity: warning
             syn: 'true'
             syn_component: cert-exporter
-        - alert: SYN_CertificateError
-          annotations:
-            description: 'Certificate at location {{ $labels.filepath }} in Kubernetes
-              secret
-
-              {{ $labels.secret_name }} in namespace {{ $labels.secret_namespace }}
-
-              couldn''t be decoded.
-
-              '
-            message: Certificate cannot be decoded
-            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateError.html
-            severity_level: critical
-          expr: x509_cert_error > 0
-          for: 5m
-          labels:
-            severity: critical
-            syn: 'true'
-            syn_component: cert-exporter
         - alert: SYN_CertificateExpiration
           annotations:
             description: 'Certificate for {{ $labels.subject_CN }} in Kubernetes secret

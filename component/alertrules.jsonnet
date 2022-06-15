@@ -13,8 +13,17 @@ assert
 
 // Upstream alerts to ignore
 local ignore_alerts = std.set(
+  local legacyIgnores =
+    if std.objectHas(params, 'ignore_alerts') then
+      std.trace(
+        'Parameter `cert_exporter.ignore_alerts` is deprecated, please '
+        + 'migrate your config to use parameter `alerts.ignoreNames` instead',
+        params.ignore_alerts
+      )
+    else
+      [];
   // Add set of alerts that should be ignored from `params.alerts`
-  com.renderArray(params.alerts.ignoreNames)
+  com.renderArray(legacyIgnores + params.alerts.ignoreNames)
 );
 
 /* FROM HERE: should be provided as library function by
