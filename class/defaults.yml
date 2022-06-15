@@ -3,13 +3,17 @@ parameters:
     =_metadata: {}
     namespace: syn-cert-exporter
 
-    chart: 1.20.0
+    charts:
+      x509-certificate-exporter:
+        source: https://charts.enix.io
+        version: 1.20.0
 
-    image:
-      registry: quay.io
-      repository: enix/x509-certificate-exporter
-      tag: 2.12.1
-      pullPolicy: IfNotPresent
+    images:
+      x509-certificate-exporter:
+        registry: quay.io
+        repository: enix/x509-certificate-exporter
+        tag: 2.12.1
+        pullPolicy: IfNotPresent
 
     ignore_alerts: []
 
@@ -26,7 +30,7 @@ parameters:
     daemonsets: {}
 
     helm_values:
-      image: ${cert_exporter:image}
+      image: ${cert_exporter:images:x509-certificate-exporter}
       podAnnotations:
         prometheus.io/port: "9793"
         prometheus.io/scrape: "true"

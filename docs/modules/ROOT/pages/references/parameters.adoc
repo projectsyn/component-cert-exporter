@@ -2,6 +2,21 @@
 
 The parent key for all of the following parameters is `cert_exporter`.
 
+== `images`
+
+[horizontal]
+type:: dictionary
+
+Dictionary containing the container images used by this component.
+
+
+== `charts`
+
+[horizontal]
+type:: dictionary
+
+Dictionary containing the helm charts used by this component.
+
 == `ignore_alerts`
 
 [horizontal]
