@@ -3,6 +3,13 @@ applications:
 
 parameters:
   cert_exporter:
+    alerts:
+      ignoreNames:
+        - SYN_CertificateRenewal
+      patchRules:
+        SYN_CertificateExpiration:
+          expr: '((x509_cert_not_after{secret_namespace=~"(syn|vshn).*"} - time()) / 86400) < 14'
+
     watch_dirs:
       - /etc/kubernetes/ssl
     daemonsets:

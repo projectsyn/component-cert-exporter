@@ -15,7 +15,18 @@ parameters:
         tag: 2.12.1
         pullPolicy: IfNotPresent
 
-    ignore_alerts: []
+    alerts:
+      # Cert-exporter alerts to ignore
+      # The component supports removal of entries from this array by
+      # giving the entry prefixed with `~` (same syntax as for the
+      # applications array).
+      ignoreNames: []
+      # Alert rule patches.
+      # Provide partial objects for alert rules that need to be tuned compared to
+      # upstream. The keys in this object correspond to the `alert` field of the
+      # rule for which the patch is intended.
+      patchRules: {}
+
 
     # secrets exporter configs
     include_namespaces: []
