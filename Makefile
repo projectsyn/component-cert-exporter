@@ -1,3 +1,9 @@
+#
+# File managed by ModuleSync - Do Not Edit
+#
+# Additional Makefiles can be added to `.sync.yml` in 'Makefile.includes'
+#
+
 MAKEFLAGS += --warn-undefined-variables
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
@@ -43,11 +49,12 @@ docs-serve: ## Preview the documentation
 .PHONY: compile
 .compile:
 	mkdir -p dependencies
-	$(COMMODORE_CMD)
+	$(COMPILE_CMD)
 
 .PHONY: test
 test: commodore_args += -f tests/$(instance).yml
 test: .compile ## Compile the component
+
 .PHONY: gen-golden
 gen-golden: commodore_args += -f tests/$(instance).yml
 gen-golden: clean .compile ## Update the reference version for target `golden-diff`.
@@ -62,4 +69,4 @@ golden-diff: clean .compile ## Diff compile output against the reference version
 
 .PHONY: clean
 clean: ## Clean the project
-	rm -rf compiled dependencies vendor helmcharts jsonnetfile*.json || true
+	rm -rf .cache compiled dependencies vendor helmcharts jsonnetfile*.json || true
