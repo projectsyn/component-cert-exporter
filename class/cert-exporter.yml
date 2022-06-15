@@ -2,10 +2,11 @@ parameters:
   kapitan:
     dependencies:
       - type: helm
-        source: https://charts.enix.io
+        source: ${cert_exporter:charts:x509-certificate-exporter:source}
         chart_name: x509-certificate-exporter
-        version: ${cert_exporter:chart}
-        output_path: dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:chart}/
+        version: ${cert_exporter:charts:x509-certificate-exporter:version}
+        output_path: dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
+
     compile:
       - input_paths:
           - cert-exporter/component/app.jsonnet
@@ -24,7 +25,7 @@ parameters:
         input_type: jsonnet
         output_path: cert-exporter/
       - input_paths:
-          - dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:chart}/
+          - dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
         input_type: helm
         output_path: cert-exporter/10_helmchart
         helm_values: ${cert_exporter:helm_values}
