@@ -1,15 +1,11 @@
 :global:
   componentName: cert-exporter
-  githubUrl: https://github.com/projectsyn/component-cert-exporter
   feature_goldenTests: true
-
-docs/antora.yml:
-  name: cert-exporter
-  title: cert-exporter
-.github/workflows/test.yaml:
-  test_makeTarget: test -e instance=${{ matrix.instance }}
-  goldenTest_makeTarget: golden-diff -e instance=${{ matrix.instance }}
-  matrix:
+  testMatrix:
     key: instance
     entries:
       - defaults
+
+.github/workflows/test.yaml:
+  test_makeTarget: test -e instance=${{ matrix.instance }}
+  goldenTest_makeTarget: golden-diff -e instance=${{ matrix.instance }}
