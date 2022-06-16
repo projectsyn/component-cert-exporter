@@ -30,43 +30,6 @@ spec:
             severity: warning
             syn: 'true'
             syn_component: cert-exporter
-        - alert: SYN_CertificateError
-          annotations:
-            description: 'Certificate at location {{ $labels.filepath }} in Kubernetes
-              secret
-
-              {{ $labels.secret_name }} in namespace {{ $labels.secret_namespace }}
-
-              couldn''t be decoded.
-
-              '
-            message: Certificate cannot be decoded
-            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateError.html
-            severity_level: critical
-          expr: x509_cert_error > 0
-          for: 5m
-          labels:
-            severity: critical
-            syn: 'true'
-            syn_component: cert-exporter
-        - alert: SYN_CertificateRenewal
-          annotations:
-            description: 'Certificate for {{ $labels.subject_CN }} in Kubernetes secret
-
-              {{ $labels.secret_name }} in namespace {{ $labels.secret_namespace }}
-
-              should be renewed.
-
-              '
-            message: Certificate should be renewed
-            runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateRenewal.html
-            severity_level: warning
-          expr: ((x509_cert_not_after - time()) / 86400) < 28
-          for: 15m
-          labels:
-            severity: warning
-            syn: 'true'
-            syn_component: cert-exporter
         - alert: SYN_CertificateExpiration
           annotations:
             description: 'Certificate for {{ $labels.subject_CN }} in Kubernetes secret
@@ -79,7 +42,8 @@ spec:
             message: Certificate is about to expire
             runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateExpiration.html
             severity_level: critical
-          expr: ((x509_cert_not_after - time()) / 86400) < 14
+          expr: ((x509_cert_not_after{secret_namespace=~"(syn|vshn).*"} - time())
+            / 86400) < 14
           for: 15m
           labels:
             severity: critical

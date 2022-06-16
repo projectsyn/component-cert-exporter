@@ -17,14 +17,41 @@ type:: dictionary
 
 Dictionary containing the helm charts used by this component.
 
-== `ignore_alerts`
+== `alerts`
+
+[horizontal]
+type:: dictionary
+
+Configuration parameters related to influencing the resulting alert rules.
+
+=== `ignoreNames`
 
 [horizontal]
 type:: list
-default:: []
+default:: `[]`
 
 This parameter can be used to disable alerts provided by cert-exporter.
 The component supports removing entries in this parameter by providing the entry prefixed with `~`.
+
+=== `patchRules`
+
+[horizontal]
+type:: dict
+default:: {}
+
+This parameter allows users to patch upstream alert.
+The keys in the parameter correspond to the field `alertname` of the alert to patch.
+The component expects valid partial Prometheus alert rule objects as values.
+
+IMPORTANT: The provided values aren't validated, they're applied to the corresponding upstream alert as-is.
+
+.Example
+[source,yaml]
+----
+patchRules:
+  SYN_CertificateExpiration:
+    expr: '((x509_cert_not_after{secret_namespace=~"(syn|vshn).*"} - time()) / 86400) < 14'
+----
 
 == `include_namespaces`
 
