@@ -1,0 +1,21 @@
+{
+  "template": "https://github.com/projectsyn/commodore-component-template.git",
+  "commit": "e6c4fd69190db1ad12e941d578b9423d0e2f993c",
+  "checkout": "main",
+  "context": {
+    "cookiecutter": {
+      "name": "cert-exporter",
+      "slug": "cert-exporter",
+      "parameter_key": "cert_exporter",
+      "test_cases": "defaults",
+      "add_golden": "y",
+      "add_matrix": "y",
+      "add_go_unit": "n",
+      "github_owner": "projectsyn",
+      "github_name": "component-cert-exporter",
+      "github_url": "https://github.com/projectsyn/component-cert-exporter",
+      "_template": "https://github.com/projectsyn/commodore-component-template.git"
+    }
+  },
+  "directory": null
+}
