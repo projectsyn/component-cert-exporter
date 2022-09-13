@@ -12,7 +12,7 @@ parameters:
       x509-certificate-exporter:
         registry: quay.io
         repository: enix/x509-certificate-exporter
-        tag: 2.12.1
+        tag: 3.4.0
         pullPolicy: IfNotPresent
 
     alerts:

@@ -32,7 +32,7 @@ spec:
             - --secret-type=kubernetes.io/tls:tls.crt
             - --max-cache-duration=300s
             - --listen-address=:9793
-          image: quay.io/enix/x509-certificate-exporter:2.12.1
+          image: quay.io/enix/x509-certificate-exporter:3.4.0
           imagePullPolicy: IfNotPresent
           name: x509-certificate-exporter
           ports:
