@@ -51,7 +51,7 @@ parameters:
         excludeLabels: ${cert_exporter:exclude_labels}
         resources:
           limits:
-            cpu: 500m
+            cpu: 1000m
       hostPathsExporter:
         watchDirectories: ${cert_exporter:watch_dirs}
         watchFiles: ${cert_exporter:watch_files}
