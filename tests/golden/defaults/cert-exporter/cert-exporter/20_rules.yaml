@@ -12,15 +12,11 @@ spec:
       rules:
         - alert: SYN_X509ExporterReadErrors
           annotations:
-            description: 'Over the last 15 minutes, this x509-certificate-exporter
-
+            description: |
+              Over the last 15 minutes, this x509-certificate-exporter
               instance has experienced errors reading certificate files or querying
-
               the Kubernetes API. This could be caused by a misconfiguration if triggered
-
               when the exporter starts.
-
-              '
             message: Increasing read errors for x509-certificate-exporter
             runbook_url: https://hub.syn.tools/cert-exporter/runbooks/X509ExporterReadErrors.html
             severity_level: warning
@@ -32,13 +28,10 @@ spec:
             syn_component: cert-exporter
         - alert: SYN_CertificateExpiration
           annotations:
-            description: 'Certificate for {{ $labels.subject_CN }} in Kubernetes secret
-
+            description: |
+              Certificate for {{ $labels.subject_CN }} in Kubernetes secret
               {{ $labels.secret_name }} in namespace {{ $labels.secret_namespace }}
-
               is about to expire.
-
-              '
             message: Certificate is about to expire
             runbook_url: https://hub.syn.tools/cert-exporter/runbooks/CertificateExpiration.html
             severity_level: critical
