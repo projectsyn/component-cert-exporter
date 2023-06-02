@@ -39,6 +39,7 @@ parameters:
     helm_values:
       image:
         registry: ${cert_exporter:images:x509-certificate-exporter:registry}
+        tagSuffix: '-scratch'
       secretsExporter:
         includeNamespaces: ${cert_exporter:include_namespaces}
         excludeNamespaces: ${cert_exporter:exclude_namespaces}
