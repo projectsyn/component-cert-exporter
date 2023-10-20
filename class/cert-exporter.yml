@@ -5,7 +5,7 @@ parameters:
         source: ${cert_exporter:charts:x509-certificate-exporter:source}
         chart_name: x509-certificate-exporter
         version: ${cert_exporter:charts:x509-certificate-exporter:version}
-        output_path: dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
+        output_path: dependencies/${_instance}/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
 
     compile:
       - input_paths:
@@ -15,21 +15,21 @@ parameters:
       - input_paths:
           - cert-exporter/component/main.jsonnet
         input_type: jsonnet
-        output_path: cert-exporter/
+        output_path: ${_instance}/
       - input_paths:
           - cert-exporter/component/ocpscc.jsonnet
         input_type: jsonnet
-        output_path: cert-exporter/
+        output_path: ${_instance}/
       - input_paths:
           - cert-exporter/component/alertrules.jsonnet
         input_type: jsonnet
-        output_path: cert-exporter/
+        output_path: ${_instance}/
       - input_paths:
-          - dependencies/cert-exporter/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
+          - dependencies/${_instance}/helmcharts/cert-exporter/${cert_exporter:charts:x509-certificate-exporter:version}/
         input_type: helm
-        output_path: cert-exporter/10_helmchart
+        output_path: ${_instance}/10_helmchart
         helm_values: ${cert_exporter:helm_values}
         helm_params:
-          name: cert-exporter
+          name: ${_instance}
           namespace: ${cert_exporter:namespace}
           dependency_update: true

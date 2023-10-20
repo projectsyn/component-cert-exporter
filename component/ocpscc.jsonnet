@@ -11,7 +11,7 @@ local openshiftScc = {
   apiVersion: 'security.openshift.io/v1',
   kind: 'SecurityContextConstraints',
   metadata: {
-    name: 'cert-exporter-scc',
+    name: '%s-scc' % inv.parameters._instance,
     namespace: params.namespace,
     labels: {
       'app.kubernetes.io/name': 'cert-exporter',
@@ -20,7 +20,7 @@ local openshiftScc = {
     },
   },
   users: [
-    'system:serviceaccount:' + params.namespace + ':cert-exporter-x509-certificate-exporter',
+    'system:serviceaccount:%s:%s-x509-certificate-exporter' % [ params.namespace, inv.parameters._instance ],
   ],
   volumes: [
     'secret',
