@@ -1,6 +1,8 @@
 parameters:
   cert_exporter:
-    =_metadata: {}
+    =_metadata:
+      multi_instance: true
+
     namespace: syn-cert-exporter
 
     charts:
@@ -35,6 +37,9 @@ parameters:
     watch_files: []
     watch_kubeconf: []
     daemonsets: {}
+
+    # Adds the openshift.io/cluster-monitoring=true label to the cert-exporter namespace if OpenShift is detected.
+    openshift_cluster_monitoring: true
 
     helm_values:
       image:

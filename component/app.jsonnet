@@ -3,7 +3,7 @@ local inv = kap.inventory();
 local params = inv.parameters.cert_exporter;
 local argocd = import 'lib/argocd.libjsonnet';
 
-local app = argocd.App('cert-exporter', params.namespace);
+local app = argocd.App(inv.parameters._instance, params.namespace);
 
 {
   'cert-exporter': app,
