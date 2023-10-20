@@ -111,6 +111,14 @@ default:: []
 
 List of Kubeconf file paths of the host to scan for embedded certificates to export metrics about.
 
+== `openshift_cluster_monitoring`
+
+[horizontal]
+type:: bool
+default:: `true`
+
+Adds the openshift.io/cluster-monitoring=true label to the cert-exporter namespace if OpenShift is detected.
+
 == `daemonsets`
 
 [horizontal]
