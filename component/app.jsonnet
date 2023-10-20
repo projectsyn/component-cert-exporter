@@ -6,5 +6,5 @@ local argocd = import 'lib/argocd.libjsonnet';
 local app = argocd.App(inv.parameters._instance, params.namespace);
 
 {
-  'cert-exporter': app,
+  [inv.parameters._instance]: app,
 }
