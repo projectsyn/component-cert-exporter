@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/instance: cert-exporter
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: x509-certificate-exporter
-    app.kubernetes.io/version: 3.10.1
-    helm.sh/chart: x509-certificate-exporter-3.10.1
+    app.kubernetes.io/version: 3.11.0
+    helm.sh/chart: x509-certificate-exporter-3.11.0
   name: cert-exporter-x509-certificate-exporter-master
   namespace: syn-cert-exporter
 spec:
@@ -20,8 +20,8 @@ spec:
         app.kubernetes.io/instance: cert-exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: x509-certificate-exporter
-        app.kubernetes.io/version: 3.10.1
-        helm.sh/chart: x509-certificate-exporter-3.10.1
+        app.kubernetes.io/version: 3.11.0
+        helm.sh/chart: x509-certificate-exporter-3.11.0
     spec:
       containers:
         - args:
@@ -29,7 +29,7 @@ spec:
             - --trim-path-components=3
             - --watch-dir=/mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
             - --max-cache-duration=300s
-          image: quay.io/enix/x509-certificate-exporter:3.10.1-scratch
+          image: quay.io/enix/x509-certificate-exporter:3.11.0-scratch
           imagePullPolicy: IfNotPresent
           name: x509-certificate-exporter
           ports:
@@ -75,8 +75,8 @@ metadata:
     app.kubernetes.io/instance: cert-exporter
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: x509-certificate-exporter
-    app.kubernetes.io/version: 3.10.1
-    helm.sh/chart: x509-certificate-exporter-3.10.1
+    app.kubernetes.io/version: 3.11.0
+    helm.sh/chart: x509-certificate-exporter-3.11.0
   name: cert-exporter-x509-certificate-exporter-worker
   namespace: syn-cert-exporter
 spec:
@@ -90,8 +90,8 @@ spec:
         app.kubernetes.io/instance: cert-exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: x509-certificate-exporter
-        app.kubernetes.io/version: 3.10.1
-        helm.sh/chart: x509-certificate-exporter-3.10.1
+        app.kubernetes.io/version: 3.11.0
+        helm.sh/chart: x509-certificate-exporter-3.11.0
     spec:
       containers:
         - args:
@@ -99,7 +99,7 @@ spec:
             - --trim-path-components=3
             - --watch-dir=/mnt/watch/dir-3c7986266497f70a0ca6dc6776cc96e1e1d3dcb6//etc/kubernetes/ssl
             - --max-cache-duration=300s
-          image: quay.io/enix/x509-certificate-exporter:3.10.1-scratch
+          image: quay.io/enix/x509-certificate-exporter:3.11.0-scratch
           imagePullPolicy: IfNotPresent
           name: x509-certificate-exporter
           ports:
