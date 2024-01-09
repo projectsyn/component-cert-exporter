@@ -8,7 +8,7 @@ parameters:
     charts:
       x509-certificate-exporter:
         source: https://charts.enix.io
-        version: 3.11.0
+        version: 3.12.0
 
     images:
       x509-certificate-exporter:
