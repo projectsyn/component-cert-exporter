@@ -63,3 +63,6 @@ parameters:
             cpu: 250m
       prometheusRules:
         create: false
+      prometheusServiceMonitor:
+        scrapeInterval: 90s
+        scrapeTimeout: 70s
