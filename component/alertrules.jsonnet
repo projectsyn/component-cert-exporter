@@ -4,7 +4,7 @@ local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
 local params = inv.parameters.cert_exporter;
 
-local isOpenshift = std.startsWith(inv.parameters.facts.distribution, 'openshift');
+local common = import 'common.libsonnet';
 
 assert
   std.member(inv.applications, 'rancher-monitoring') ||
@@ -34,7 +34,7 @@ local ignore_alerts = std.set(
 // correctly in the environment into which we're deploying.
 
 local global_alert_params =
-  if isOpenshift then
+  if common.isOpenshift then
     inv.parameters.openshift4_monitoring.alerts
   else
     inv.parameters.rancher_monitoring.alerts;

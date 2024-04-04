@@ -5,7 +5,7 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.cert_exporter;
 
-local isOpenshift = std.startsWith(inv.parameters.facts.distribution, 'openshift');
+local common = import 'common.libsonnet';
 
 local namespace = kube.Namespace(params.namespace) {
   metadata+: {
@@ -13,7 +13,7 @@ local namespace = kube.Namespace(params.namespace) {
       'app.kubernetes.io/name': params.namespace,
       // Configure the namespaces so that the OCP4 cluster-monitoring
       // Prometheus can find the servicemonitors and rules.
-      [if isOpenshift && params.openshift_cluster_monitoring then 'openshift.io/cluster-monitoring']: 'true',
+      [if common.isOpenshift && params.openshift_cluster_monitoring then 'openshift.io/cluster-monitoring']: 'true',
     },
   },
 };
