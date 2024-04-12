@@ -5,7 +5,7 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.cert_exporter;
 
-local isOpenshift = std.startsWith(inv.parameters.facts.distribution, 'openshift');
+local common = import 'common.libsonnet';
 
 local openshiftScc = {
   apiVersion: 'security.openshift.io/v1',
@@ -61,5 +61,5 @@ local openshiftScc = {
 
 // Define outputs below
 {
-  [if isOpenshift then '10_openshift-scc']: openshiftScc,
+  [if common.isOpenshift then '10_openshift-scc']: openshiftScc,
 }
