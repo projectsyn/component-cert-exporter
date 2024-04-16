@@ -46,6 +46,7 @@ parameters:
         registry: ${cert_exporter:images:x509-certificate-exporter:registry}
         tagSuffix: '-scratch'
       secretsExporter:
+        priorityClassName: system-cluster-critical
         includeNamespaces: ${cert_exporter:include_namespaces}
         excludeNamespaces: ${cert_exporter:exclude_namespaces}
         includeLabels: ${cert_exporter:include_labels}
@@ -54,6 +55,7 @@ parameters:
           limits:
             cpu: 1000m
       hostPathsExporter:
+        priorityClassName: system-node-critical
         watchDirectories: ${cert_exporter:watch_dirs}
         watchFiles: ${cert_exporter:watch_files}
         watchKubeconfFiles: ${cert_exporter:watch_kubeconf}

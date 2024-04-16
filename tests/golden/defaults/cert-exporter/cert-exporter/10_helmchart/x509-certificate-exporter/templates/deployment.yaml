@@ -50,5 +50,6 @@ spec:
             readOnlyRootFilesystem: true
             runAsGroup: 65534
             runAsUser: 65534
+      priorityClassName: system-cluster-critical
       restartPolicy: Always
       serviceAccountName: cert-exporter-x509-certificate-exporter
