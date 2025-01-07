@@ -2,6 +2,7 @@ parameters:
   cert_exporter:
     =_metadata:
       multi_instance: true
+      multi_tenant: true
 
     namespace: syn-cert-exporter
 
