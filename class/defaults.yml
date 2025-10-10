@@ -55,6 +55,12 @@ parameters:
         resources:
           limits:
             cpu: 1000m
+        readinessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 10
+        livenessProbe:
+          initialDelaySeconds: 25
+          periodSeconds: 10
       hostPathsExporter:
         priorityClassName: system-node-critical
         watchDirectories: ${cert_exporter:watch_dirs}

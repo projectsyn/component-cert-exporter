@@ -36,8 +36,8 @@ spec:
             httpGet:
               path: /healthz
               port: metrics
-            initialDelaySeconds: 5
-            periodSeconds: 3
+            initialDelaySeconds: 25
+            periodSeconds: 10
           name: x509-certificate-exporter
           ports:
             - containerPort: 9793
@@ -46,8 +46,8 @@ spec:
             httpGet:
               path: /healthz
               port: metrics
-            initialDelaySeconds: 5
-            periodSeconds: 3
+            initialDelaySeconds: 25
+            periodSeconds: 10
           resources:
             limits:
               cpu: 1000m
