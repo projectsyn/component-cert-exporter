@@ -2,27 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
+    app.kubernetes.io/component: secrets
     app.kubernetes.io/instance: cert-exporter
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: x509-certificate-exporter
-    app.kubernetes.io/version: 3.19.1
-    helm.sh/chart: x509-certificate-exporter-3.19.1
+    app.kubernetes.io/version: 3.21.0
+    helm.sh/chart: x509-certificate-exporter-3.21.0
   name: cert-exporter-x509-certificate-exporter
   namespace: syn-cert-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
+      app.kubernetes.io/component: secrets
       app.kubernetes.io/instance: cert-exporter
       app.kubernetes.io/name: x509-certificate-exporter
   template:
     metadata:
       labels:
+        app.kubernetes.io/component: secrets
         app.kubernetes.io/instance: cert-exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: x509-certificate-exporter
-        app.kubernetes.io/version: 3.19.1
-        helm.sh/chart: x509-certificate-exporter-3.19.1
+        app.kubernetes.io/version: 3.21.0
+        helm.sh/chart: x509-certificate-exporter-3.21.0
     spec:
       containers:
         - args:
@@ -30,7 +33,7 @@ spec:
             - --secret-type=kubernetes.io/tls:tls.crt
             - --max-cache-duration=300s
             - --listen-address=:9793
-          image: quay.io/enix/x509-certificate-exporter:3.19.1-scratch
+          image: quay.io/enix/x509-certificate-exporter:3.21.0-scratch
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
