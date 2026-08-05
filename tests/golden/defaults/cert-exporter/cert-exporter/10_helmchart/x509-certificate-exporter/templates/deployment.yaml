@@ -2,35 +2,37 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
+    app.kubernetes.io/component: secrets
     app.kubernetes.io/instance: cert-exporter
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: x509-certificate-exporter
-    app.kubernetes.io/version: 3.19.1
-    helm.sh/chart: x509-certificate-exporter-3.19.1
+    app.kubernetes.io/version: 4.2.0
+    helm.sh/chart: x509-certificate-exporter-4.2.0
   name: cert-exporter-x509-certificate-exporter
   namespace: syn-cert-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
+      app.kubernetes.io/component: secrets
       app.kubernetes.io/instance: cert-exporter
       app.kubernetes.io/name: x509-certificate-exporter
   template:
     metadata:
+      annotations:
+        checksum/config: 20cc9766db3f11cf06ab5f60676b3fc9aad0d17e007a810c8406747a5af32c24
       labels:
+        app.kubernetes.io/component: secrets
         app.kubernetes.io/instance: cert-exporter
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: x509-certificate-exporter
-        app.kubernetes.io/version: 3.19.1
-        helm.sh/chart: x509-certificate-exporter-3.19.1
+        app.kubernetes.io/version: 4.2.0
+        helm.sh/chart: x509-certificate-exporter-4.2.0
     spec:
       containers:
         - args:
-            - --watch-kube-secrets
-            - --secret-type=kubernetes.io/tls:tls.crt
-            - --max-cache-duration=300s
-            - --listen-address=:9793
-          image: quay.io/enix/x509-certificate-exporter:3.19.1-scratch
+            - --config=/etc/x509-certificate-exporter/config.yaml
+          image: quay.io/enix/x509-certificate-exporter:4.2.0-scratch
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -56,14 +58,25 @@ spec:
               cpu: 20m
               memory: 20Mi
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
             runAsGroup: 65534
             runAsUser: 65534
+          volumeMounts:
+            - mountPath: /etc/x509-certificate-exporter
+              name: config
+              readOnly: true
       priorityClassName: system-cluster-critical
       restartPolicy: Always
       securityContext:
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: cert-exporter-x509-certificate-exporter
+      volumes:
+        - configMap:
+            name: cert-exporter-x509-certificate-exporter-secrets
+          name: config
